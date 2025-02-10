@@ -6,7 +6,8 @@ public record PessoasMalaDiretaDto(Long id, String nome, String malaDireta) {
         this(
             pessoa.getId(),
             pessoa.getNome(),
-            pessoa.getEndereco() + ", " + pessoa.getCep() + ", " + pessoa.getCidade() + " - " + pessoa.getUf()
+            pessoa.getEndereco() + " - CEP: " + pessoa.getCep() + 
+            " - " + pessoa.getCidade() + "-" + pessoa.getUf()
         );
     }
 

@@ -17,14 +17,10 @@ public class Pessoas {
 	
 	@Column(nullable = false, length = 200)
 	private String nome;
-	
-	@Column()
 	private String endereco;
 	
-	@Column(unique = true, length = 9)
+	@Column(length = 9)
 	private String cep;
-	
-	@Column(length = 60)
 	private String cidade;
 	
 	@Column(length = 2)
