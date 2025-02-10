@@ -1,11 +1,10 @@
 package br.com.ydcns.AppPessoas.models;
 
-import org.springframework.data.annotation.Id;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
@@ -16,17 +15,24 @@ public class Pessoas {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(nullable = false)
+	@Column(nullable = false, length = 200)
 	private String nome;
 	
+	@Column()
 	private String endereco;
-	private Integer cep;
+	
+	@Column(unique = true, length = 9)
+	private String cep;
+	
+	@Column(length = 60)
 	private String cidade;
+	
+	@Column(length = 2)
 	private String uf;
 	
 	public Pessoas() {}
 
-	public Pessoas(String nome, String endereco, Integer cep, String cidade, String uf) {
+	public Pessoas(String nome, String endereco, String cep, String cidade, String uf) {
 		super();
 		this.nome = nome;
 		this.endereco = endereco;
@@ -59,11 +65,11 @@ public class Pessoas {
 		this.endereco = endereco;
 	}
 
-	public Integer getCep() {
+	public String getCep() {
 		return cep;
 	}
 
-	public void setCep(Integer cep) {
+	public void setCep(String cep) {
 		this.cep = cep;
 	}
 
@@ -85,8 +91,8 @@ public class Pessoas {
 
 	@Override
 	public String toString() {
-		return "Pessoas [id=" + id + ", nome=" + nome + ", endereco=" + endereco + ", cep=" + cep + ", cidade=" + cidade
-				+ ", uf=" + uf + "]";
+		return "Pessoas [id=" + this.id + ", nome=" + this.nome + ", endereco=" + this.endereco + 
+				        ", cep=" + this.cep + ", cidade=" + this.cidade + ", uf=" + this.uf + "]";
 	}
 	
 	
