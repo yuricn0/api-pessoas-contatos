@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import io.swagger.v3.oas.annotations.Hidden;
+
+@Hidden
 @ControllerAdvice
 public class HandlerException extends ResponseEntityExceptionHandler{
 	
@@ -30,6 +33,54 @@ public class HandlerException extends ResponseEntityExceptionHandler{
    
    @ExceptionHandler(ListNullException.class)
    public ResponseEntity<Map<String, String>> tratarListaVazia(ListNullException ex) {
+       Map<String, String> erro = new HashMap<>();
+       erro.put("erro", ex.getMessage());
+		        
+		    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);
+		}
+   
+   @ExceptionHandler(IdNotNullException.class)
+   public ResponseEntity<Map<String, String>> tratarIdVazio(IdNotNullException ex) {
+       Map<String, String> erro = new HashMap<>();
+       erro.put("erro", ex.getMessage());
+		        
+		    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erro);
+		}
+   
+   @ExceptionHandler(UfValidateException.class)
+   public ResponseEntity<Map<String, String>> tratarUf(UfValidateException ex) {
+       Map<String, String> erro = new HashMap<>();
+       erro.put("erro", ex.getMessage());
+		        
+		    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erro);
+		}
+   
+   @ExceptionHandler(CepValidateException.class)
+   public ResponseEntity<Map<String, String>> tratarCep(CepValidateException ex) {
+       Map<String, String> erro = new HashMap<>();
+       erro.put("erro", ex.getMessage());
+		        
+		    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erro);
+		}
+   
+   @ExceptionHandler(NameLimitException.class)
+   public ResponseEntity<Map<String, String>> tratarCep(NameLimitException ex) {
+       Map<String, String> erro = new HashMap<>();
+       erro.put("erro", ex.getMessage());
+		        
+		    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erro);
+		}
+   
+   @ExceptionHandler(TypeEnumNotFoundException.class)
+   public ResponseEntity<Map<String, String>> tratarEnum(TypeEnumNotFoundException ex) {
+       Map<String, String> erro = new HashMap<>();
+       erro.put("erro", ex.getMessage());
+		        
+		    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);
+		}	
+   
+   @ExceptionHandler(PessoaNotFoundException.class)
+   public ResponseEntity<Map<String, String>> tratarPessoaNotFound(PessoaNotFoundException ex) {
        Map<String, String> erro = new HashMap<>();
        erro.put("erro", ex.getMessage());
 		        

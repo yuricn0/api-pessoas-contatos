@@ -6,9 +6,13 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.ydcns.AppPessoas.exceptions.CepValidateException;
 import br.com.ydcns.AppPessoas.exceptions.FindByIdException;
+import br.com.ydcns.AppPessoas.exceptions.IdNotNullException;
 import br.com.ydcns.AppPessoas.exceptions.ListNullException;
+import br.com.ydcns.AppPessoas.exceptions.NameLimitException;
 import br.com.ydcns.AppPessoas.exceptions.NameNotNullException;
+import br.com.ydcns.AppPessoas.exceptions.UfValidateException;
 import br.com.ydcns.AppPessoas.models.Pessoas;
 import br.com.ydcns.AppPessoas.models.PessoasMalaDiretaDto;
 import br.com.ydcns.AppPessoas.repositories.PessoasRepository;
@@ -19,10 +23,33 @@ public class PessoasService {
 	@Autowired
 	private PessoasRepository pessoasRepository;
 	
-	public Pessoas createPessoa(Pessoas pessoa) {
-		if (pessoa.getNome() == null) {
+	public Pessoas create(Pessoas pessoa) {
+		if (pessoa.getNome() == null || pessoa.getNome().trim().isEmpty()) {
 			throw new NameNotNullException(); 
+		} else if (pessoa.getNome().trim().length() > 100 ) {
+			throw new NameLimitException();
 		}
+		
+		if (pessoa.getCep() != null && pessoa.getCep().trim().length() != 9) {
+			throw new CepValidateException();
+		}
+		
+		if (pessoa.getUf() != null && pessoa.getUf().trim().length() != 2) {
+			throw new UfValidateException();
+		}
+		
+		if (pessoa.getNome() != null) {
+		    pessoa.setNome(pessoa.getNome().trim());
+		}
+
+		if (pessoa.getCep() != null) {
+		    pessoa.setCep(pessoa.getCep().trim());
+		}
+		
+		if (pessoa.getUf() != null) {
+		    pessoa.setUf(pessoa.getUf().trim().toUpperCase());
+		}
+
 		return pessoasRepository.save(pessoa);
 	}
 	
@@ -54,16 +81,53 @@ public class PessoasService {
 	}
 
 	public Pessoas update(Pessoas pessoa) {
-		Optional<Pessoas> findPessoa = pessoasRepository.findById(pessoa.getId());
-		if(findPessoa.isPresent()) {
-			Pessoas updPessoa = findPessoa.get();
-			updPessoa.setNome(pessoa.getNome());
-			updPessoa.setEndereco(pessoa.getEndereco());
-			updPessoa.setCep(pessoa.getCep());
-			updPessoa.setCidade(pessoa.getCidade());
-			updPessoa.setUf(pessoa.getUf());
-			return pessoasRepository.save(updPessoa); 
+		if (pessoa.getId() == null) {
+			throw new IdNotNullException();
 		}
+		
+		if (pessoa.getNome() != null && pessoa.getNome().trim().isEmpty()){
+			throw new NameNotNullException();
+		}
+		
+		if (pessoa.getNome() != null && pessoa.getNome().trim().length() > 100 ) {
+			throw new NameLimitException();
+		}
+		
+		if (pessoa.getCep() != null && pessoa.getCep().trim().length() != 9) {
+			throw new CepValidateException();
+		}
+		
+		if (pessoa.getUf() != null && pessoa.getUf().trim().length() != 2) {
+			throw new UfValidateException();
+		}
+					
+		Optional<Pessoas> findPessoa = pessoasRepository.findById(pessoa.getId());
+		if (findPessoa.isPresent()) {
+		    Pessoas updPessoa = findPessoa.get();
+
+		    if (pessoa.getNome() != null) {
+		        updPessoa.setNome(pessoa.getNome().trim());
+		    }
+		    
+		    if (pessoa.getEndereco() != null) {
+		        updPessoa.setEndereco(pessoa.getEndereco().trim());
+		    }
+
+		    if (pessoa.getCep() != null) {
+		        updPessoa.setCep(pessoa.getCep().trim());
+		    }
+
+		    if (pessoa.getCidade() != null) {
+		        updPessoa.setCidade(pessoa.getCidade().trim());
+		    }
+
+		    if (pessoa.getUf() != null) {
+		        updPessoa.setUf(pessoa.getUf().trim().toUpperCase());
+		    }
+
+		    return pessoasRepository.save(updPessoa); 
+		}
+		
 		throw new FindByIdException(); 
 	}
 
