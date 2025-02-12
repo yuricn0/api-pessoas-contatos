@@ -13,7 +13,7 @@ import io.swagger.v3.oas.annotations.Hidden;
 
 @Hidden
 @ControllerAdvice
-public class HandlerException extends ResponseEntityExceptionHandler{
+public class HandlerGlobalException extends ResponseEntityExceptionHandler{
 	
    @ExceptionHandler(NameNotNullException.class)
     public ResponseEntity<Map<String, String>> tratarNomeNulo(NameNotNullException ex) {
@@ -76,7 +76,7 @@ public class HandlerException extends ResponseEntityExceptionHandler{
        Map<String, String> erro = new HashMap<>();
        erro.put("erro", ex.getMessage());
 		        
-		    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);
+		    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erro);
 		}	
    
    @ExceptionHandler(PessoaNotFoundException.class)
@@ -85,5 +85,21 @@ public class HandlerException extends ResponseEntityExceptionHandler{
        erro.put("erro", ex.getMessage());
 		        
 		    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);
+		}
+   
+   @ExceptionHandler(TypeContatoNotNullException.class)
+   public ResponseEntity<Map<String, String>> tratarTypeContato(TypeContatoNotNullException ex) {
+       Map<String, String> erro = new HashMap<>();
+       erro.put("erro", ex.getMessage());
+		        
+		    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erro);
+		}
+   
+   @ExceptionHandler(ContatoNotNullException.class)
+   public ResponseEntity<Map<String, String>> tratarTypeContato(ContatoNotNullException ex) {
+       Map<String, String> erro = new HashMap<>();
+       erro.put("erro", ex.getMessage());
+		        
+		    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erro);
 		}	
 }

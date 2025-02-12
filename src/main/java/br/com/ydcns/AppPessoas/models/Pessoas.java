@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.CascadeType;
@@ -26,7 +26,6 @@ public class Pessoas implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Schema(description = "Identificador único da pessoa")
 	private Long id;
 	
 	@NotBlank
@@ -51,8 +50,8 @@ public class Pessoas implements Serializable {
 	@Schema(description = "Estado da pessoa (UF)", example = "SP")
 	private String uf;
 	
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	@OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JsonIgnore
+	@OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Contato> contato = new HashSet<>();
 	
 	public Pessoas() {}

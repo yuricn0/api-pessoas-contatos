@@ -15,6 +15,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "tb_contatos")
@@ -23,34 +25,33 @@ public class Contato implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Schema(description = "Identificador único do contato")
 	private Long id;
 	
-	// @NotNull
-	@Enumerated(EnumType.STRING)
+	@NotNull
+	@Enumerated(EnumType.ORDINAL)
 	@Column(nullable = false)
-	@Schema(description = "Tipo de Contato",
-			example = "(0 = TELEFONE, 1 = CELULAR, 2 = EMAIL)")
+	@Schema(description = "Meios de contato da pessoa",
+			example = "Telefone, Celular, Email, Linkedin e Github")
 	@JsonProperty("tipoContato")
 	private TipoContato tipoContato;
 	
-	// @NotBlank
+	@NotBlank
 	@Column(nullable = false)
-	@Schema(description = "Telefone, celular ou email",
-			example = "Telefone: XXXX-XXXX | Celular:(XX) XXXXX-XXXX | E-mail: joao@xxx.com ")
+	@Schema(description = "Contato da pessoa")
 	@JsonProperty("contato")
 	private String contato;
 	
+	@NotNull
 	@ManyToOne
     @JoinColumn(name = "pessoa_id")
-	@JsonProperty("pessoa")
+	@Schema(description = "ID da pessoa que possui o contato")
+	@JsonProperty("pessoa_id")
 	private Pessoas pessoa;
 	
 	public Contato() {}
 
-	public Contato(Long id, TipoContato tipoContato, String contato, Pessoas pessoa) {
+	public Contato(TipoContato tipoContato, String contato, Pessoas pessoa) {
 		super();
-		this.id = id;
 		this.tipoContato = tipoContato;
 		this.contato = contato;
 		this.pessoa = pessoa;
@@ -90,7 +91,7 @@ public class Contato implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Contatos [id=" + this.id + ", tipoContato=" + this.tipoContato +
+		return "Contato [id=" + this.id + ", tipoContato=" + this.tipoContato +
 				", contato=" + this.contato + ", pessoa=" + this.pessoa + "]";
 	};
 }

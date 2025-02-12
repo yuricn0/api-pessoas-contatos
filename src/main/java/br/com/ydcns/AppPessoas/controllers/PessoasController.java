@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.ydcns.AppPessoas.models.Pessoas;
-import br.com.ydcns.AppPessoas.models.PessoasMalaDiretaDto;
+import br.com.ydcns.AppPessoas.models.PessoasMalaDiretaDTO;
 import br.com.ydcns.AppPessoas.services.PessoasService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
@@ -48,7 +48,7 @@ public class PessoasController {
 			   description = "Retorna nome e endereço completo de uma pessoa específica para mala direta.")
     @GetMapping("maladireta/{id}")
     public ResponseEntity<Object> findByIdMalaDireta(@PathVariable Long id) {
-    	PessoasMalaDiretaDto pessoaDto = pessoasService.findByIdMalaDireta(id);
+    	PessoasMalaDiretaDTO pessoaDto = pessoasService.findByIdMalaDireta(id);
 		return ResponseEntity.ok(pessoaDto);
     }
     

@@ -14,7 +14,7 @@ import br.com.ydcns.AppPessoas.exceptions.NameLimitException;
 import br.com.ydcns.AppPessoas.exceptions.NameNotNullException;
 import br.com.ydcns.AppPessoas.exceptions.UfValidateException;
 import br.com.ydcns.AppPessoas.models.Pessoas;
-import br.com.ydcns.AppPessoas.models.PessoasMalaDiretaDto;
+import br.com.ydcns.AppPessoas.models.PessoasMalaDiretaDTO;
 import br.com.ydcns.AppPessoas.repositories.PessoasRepository;
 
 @Service
@@ -61,12 +61,12 @@ public class PessoasService {
 	    return pessoa; 
 	}
 	
-	public PessoasMalaDiretaDto findByIdMalaDireta(Long id) {
+	public PessoasMalaDiretaDTO findByIdMalaDireta(Long id) {
 	    Optional<Pessoas> pessoa = pessoasRepository.findById(id);
 	    if (pessoa.isEmpty()) {
 	        throw new FindByIdException();
 	    }
-	    return new PessoasMalaDiretaDto(pessoa.get());
+	    return new PessoasMalaDiretaDTO(pessoa.get());
 	}
 	
 	public List<Pessoas> findAll(){

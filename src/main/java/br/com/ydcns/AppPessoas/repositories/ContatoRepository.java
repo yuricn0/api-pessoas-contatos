@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import br.com.ydcns.AppPessoas.models.Contato;
 
 @Repository
-public interface ContatosRepository extends JpaRepository<Contato, Long> {
+public interface ContatoRepository extends JpaRepository<Contato, Long> {
 
 }

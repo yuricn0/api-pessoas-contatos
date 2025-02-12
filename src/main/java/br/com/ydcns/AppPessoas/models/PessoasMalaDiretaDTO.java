@@ -1,8 +1,8 @@
 package br.com.ydcns.AppPessoas.models;
 
-public record PessoasMalaDiretaDto(Long id, String nome, String malaDireta) {
+public record PessoasMalaDiretaDTO(Long id, String nome, String malaDireta) {
     
-    public PessoasMalaDiretaDto(Pessoas pessoa) {
+    public PessoasMalaDiretaDTO(Pessoas pessoa) {
         this(
             pessoa.getId(),
             pessoa.getNome(),

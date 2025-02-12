@@ -4,13 +4,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.ydcns.AppPessoas.models.Contato;
-import br.com.ydcns.AppPessoas.services.ContatosService;
+import br.com.ydcns.AppPessoas.models.ContatoDTO;
+import br.com.ydcns.AppPessoas.services.ContatoService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import jakarta.validation.Valid;
 
 
 @RestController
@@ -18,14 +20,18 @@ import io.swagger.v3.oas.annotations.parameters.RequestBody;
 public class ContatoController {
 	
 	@Autowired
-	private ContatosService contatosService;	
+	private ContatoService contatoService;	
 	
 	@Operation(summary = "Cadastra novo contato",
 			   description = "Cadastra um novo contato a uma pessoa.")
 	@PostMapping
-	public ResponseEntity<Contato> createContato(@RequestBody Contato contato) {
-		System.out.println("Recebendo requisição: " + contato);
-		Contato newContato = contatosService.createContato(contato);
+	public ResponseEntity<Contato> createContato(@Valid @RequestBody ContatoDTO contatoDTO) {
+		Contato newContato = contatoService.createContato(
+				contatoDTO.getTipoContato(),
+				contatoDTO.getContato(),
+				contatoDTO.getPessoaId()
+			);
+		
 		return ResponseEntity.status(HttpStatus.CREATED).body(newContato);	
 	}
 }

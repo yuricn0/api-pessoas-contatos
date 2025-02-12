@@ -3,30 +3,23 @@ package br.com.ydcns.AppPessoas.enums;
 import br.com.ydcns.AppPessoas.exceptions.TypeEnumNotFoundException;
 
 public enum TipoContato {
-    TELEFONE(0),
-    CELULAR(1),
-    EMAIL(2); 
+    TELEFONE, 
+    CELULAR, 
+    EMAIL,
+	LINKEDIN,
+	GITHUB;
+	
+    public static TipoContato fromString(String tipoContatoStr) {
+        String tipoContatoFormatado = tipoContatoStr != null ? tipoContatoStr.trim().toUpperCase() : "";
 
-    private final int codigo;
+        if (tipoContatoFormatado.isEmpty()) {
+            throw new TypeEnumNotFoundException("Tipo de contato não pode ser vazio.");
+        }
 
-    TipoContato(int codigo) {
-        this.codigo = codigo;
-    }
-
-    public int getCodigo() {
-        return codigo;
-    }
-
-    public static TipoContato fromString(String text) {
-        switch (text.toUpperCase()) {
-            case "TELEFONE":
-                return TELEFONE;
-            case "CELULAR":
-                return CELULAR;
-            case "EMAIL":
-                return EMAIL;
-            default:
-                throw new TypeEnumNotFoundException();
+        try {
+            return TipoContato.valueOf(tipoContatoFormatado);
+        } catch (Exception e) {
+            throw new TypeEnumNotFoundException();
         }
     }
 }
