@@ -1,17 +1,11 @@
 package br.com.ydcns.AppPessoas.models;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-
 public class ContatoDTO {
 	
-	@NotNull
 	private String tipoContato;
-	
-	@NotBlank
+
 	private String contato;
 	
-	@NotNull
     private Long pessoaId;
  
 	public String getTipoContato() {

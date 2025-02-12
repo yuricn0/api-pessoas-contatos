@@ -12,7 +12,6 @@ import br.com.ydcns.AppPessoas.models.Contato;
 import br.com.ydcns.AppPessoas.models.ContatoDTO;
 import br.com.ydcns.AppPessoas.services.ContatoService;
 import io.swagger.v3.oas.annotations.Operation;
-import jakarta.validation.Valid;
 
 
 @RestController
@@ -25,7 +24,7 @@ public class ContatoController {
 	@Operation(summary = "Cadastra novo contato",
 			   description = "Cadastra um novo contato a uma pessoa.")
 	@PostMapping
-	public ResponseEntity<Contato> createContato(@Valid @RequestBody ContatoDTO contatoDTO) {
+	public ResponseEntity<Contato> createContato(@RequestBody ContatoDTO contatoDTO) {
 		Contato newContato = contatoService.createContato(
 				contatoDTO.getTipoContato(),
 				contatoDTO.getContato(),

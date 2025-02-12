@@ -31,7 +31,7 @@ public class PessoasController {
 	@Operation(summary = "Cadastra nova pessoa",
 			   description = "Cadastra uma nova pessoa no sistema.")
 	@PostMapping  
-	public ResponseEntity<Pessoas> createPessoa(@Valid @RequestBody Pessoas pessoa) {
+	public ResponseEntity<Pessoas> createPessoa(@RequestBody Pessoas pessoa) {
 		Pessoas newPessoa = pessoasService.create(pessoa);
 		return ResponseEntity.status(HttpStatus.CREATED).body(newPessoa);
 	}

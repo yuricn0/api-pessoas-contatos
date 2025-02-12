@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.ydcns.AppPessoas.enums.TipoContato;
 import br.com.ydcns.AppPessoas.exceptions.ContatoNotNullException;
+import br.com.ydcns.AppPessoas.exceptions.IdNotNullException;
 import br.com.ydcns.AppPessoas.exceptions.PessoaNotFoundException;
 import br.com.ydcns.AppPessoas.models.Contato;
 import br.com.ydcns.AppPessoas.models.Pessoas;
@@ -23,6 +24,10 @@ public class ContatoService {
     public Contato createContato(String tipoContatoStr,
     							 String contato,
     							 Long pessoaId) {
+    	
+    	if(pessoaId == null || pessoaId <= 0) {
+    		throw new IdNotNullException();
+    	}
     	
     	Pessoas pessoa = pessoasRepository.findById(pessoaId)
                 .orElseThrow(PessoaNotFoundException::new);
