@@ -39,8 +39,8 @@ public class ContatoController {
 			   description = "Retorna os dados de um contato específico.")
 	@GetMapping("{id}")
 	public ResponseEntity<Optional<ContatoDTO>> findById(@PathVariable Long id) {
-		Optional<ContatoDTO> contatoDTO = contatoService.findById(id);
-		return ResponseEntity.ok(contatoDTO);	
+		Optional<ContatoDTO> findContatoDTO = contatoService.findById(id);
+		return ResponseEntity.ok(findContatoDTO);	
 	}
 	
 	@Operation(summary = "Lista todos os contatos de uma pessoa pelo ID",
@@ -55,7 +55,7 @@ public class ContatoController {
 			   description = "Atualiza um contato existente.")
 	@PutMapping("{id}")
 	public ResponseEntity<ContatoDTO> update(@RequestBody ContatoDTO contatoDTO) {
-		ContatoDTO contatoUpdDTO = contatoService.update(contatoDTO);
-		return ResponseEntity.ok(contatoUpdDTO);
+		ContatoDTO updContatoDTO = contatoService.update(contatoDTO);
+		return ResponseEntity.ok(updContatoDTO);
 	}
 }
