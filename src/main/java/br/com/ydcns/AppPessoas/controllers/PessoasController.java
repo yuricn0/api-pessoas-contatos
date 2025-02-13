@@ -15,11 +15,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.ydcns.AppPessoas.dto.PessoasMalaDiretaDTO;
 import br.com.ydcns.AppPessoas.models.Pessoas;
-import br.com.ydcns.AppPessoas.models.PessoasMalaDiretaDTO;
 import br.com.ydcns.AppPessoas.services.PessoasService;
 import io.swagger.v3.oas.annotations.Operation;
-import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/pessoas")
@@ -63,7 +62,7 @@ public class PessoasController {
 	@Operation(summary = "Atualiza uma pessoa",
 			   description = "Atualiza os dados de uma pessoa existente pelo ID.")
     @PutMapping("/{id}")
-    public ResponseEntity<Pessoas> update(@Valid @RequestBody Pessoas pessoa){
+    public ResponseEntity<Pessoas> update(@RequestBody Pessoas pessoa){
 		Pessoas updPessoas = pessoasService.update(pessoa);
 		return ResponseEntity.ok(updPessoas);
 	}

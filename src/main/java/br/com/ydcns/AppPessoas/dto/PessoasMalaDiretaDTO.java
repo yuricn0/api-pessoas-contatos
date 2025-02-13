@@ -1,4 +1,6 @@
-package br.com.ydcns.AppPessoas.models;
+package br.com.ydcns.AppPessoas.dto;
+
+import br.com.ydcns.AppPessoas.models.Pessoas;
 
 public record PessoasMalaDiretaDTO(Long id, String nome, String malaDireta) {
     

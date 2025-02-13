@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.ydcns.AppPessoas.dto.PessoasMalaDiretaDTO;
 import br.com.ydcns.AppPessoas.exceptions.CepValidateException;
 import br.com.ydcns.AppPessoas.exceptions.FindByIdException;
 import br.com.ydcns.AppPessoas.exceptions.IdNotNullException;
@@ -14,7 +15,6 @@ import br.com.ydcns.AppPessoas.exceptions.NameLimitException;
 import br.com.ydcns.AppPessoas.exceptions.NameNotNullException;
 import br.com.ydcns.AppPessoas.exceptions.UfValidateException;
 import br.com.ydcns.AppPessoas.models.Pessoas;
-import br.com.ydcns.AppPessoas.models.PessoasMalaDiretaDTO;
 import br.com.ydcns.AppPessoas.repositories.PessoasRepository;
 
 @Service
@@ -89,7 +89,7 @@ public class PessoasService {
 			throw new NameNotNullException();
 		}
 		
-		if (pessoa.getNome() != null && pessoa.getNome().trim().length() > 100 ) {
+		if (pessoa.getNome() != null && pessoa.getNome().trim().length() > 100) {
 			throw new NameLimitException();
 		}
 		

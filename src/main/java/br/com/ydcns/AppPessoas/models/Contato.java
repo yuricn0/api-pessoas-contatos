@@ -51,7 +51,6 @@ public class Contato implements Serializable {
 	public Contato() {}
 
 	public Contato(TipoContato tipoContato, String contato, Pessoas pessoa) {
-		super();
 		this.tipoContato = tipoContato;
 		this.contato = contato;
 		this.pessoa = pessoa;
