@@ -1,6 +1,5 @@
 package br.com.ydcns.AppPessoas.models;
 
-import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -10,7 +9,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -20,8 +18,8 @@ import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "tb_pessoas")
-public class Pessoas implements Serializable {
-	private static final long serialVersionUID = 1L;
+@Schema(hidden = true)
+public class Pessoas{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,7 +47,7 @@ public class Pessoas implements Serializable {
 	private String uf;
 	
 	@JsonIgnore
-	@OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Contato> contato = new HashSet<>();
 	
 	public Pessoas() {}

@@ -13,6 +13,7 @@ import br.com.ydcns.AppPessoas.exceptions.ContatoNotFoundException;
 import br.com.ydcns.AppPessoas.exceptions.ContatoNotNullException;
 import br.com.ydcns.AppPessoas.exceptions.FindByIdException;
 import br.com.ydcns.AppPessoas.exceptions.IdNotNullException;
+import br.com.ydcns.AppPessoas.exceptions.PessoaIdNotNullException;
 import br.com.ydcns.AppPessoas.exceptions.PessoaNotFoundException;
 import br.com.ydcns.AppPessoas.models.Contato;
 import br.com.ydcns.AppPessoas.models.Pessoas;
@@ -31,7 +32,7 @@ public class ContatoService {
     public ContatoDTO createContato(ContatoDTO contatoDTO) {
     	
     	if(contatoDTO.getPessoaId() == null) {
-    		throw new IdNotNullException();
+    		throw new PessoaIdNotNullException();
     	}
     	
     	Pessoas pessoa = pessoasRepository.findById(contatoDTO.getPessoaId())
@@ -119,5 +120,11 @@ public class ContatoService {
 	    					  updContato.getContato(),
 	    					  updContato.getPessoa().getId());
     }
+	
+	public void deleteById(Long id) {
+		Contato contato = contatoRepository.findById(id)
+				.orElseThrow(FindByIdException::new);
+		contatoRepository.delete(contato);
+	}	
 }
 

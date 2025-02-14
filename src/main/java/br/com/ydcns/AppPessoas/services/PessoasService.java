@@ -132,10 +132,9 @@ public class PessoasService {
 	}
 
 	public void deleteById(Long id) {
-		if (!pessoasRepository.existsById(id)) {
-			 throw new FindByIdException();
-		}
-		pessoasRepository.deleteById(id);
-	}
+		Pessoas pessoa = pessoasRepository.findById(id)
+				.orElseThrow(FindByIdException::new);
+		pessoasRepository.delete(pessoa);
+	}	
 }
 	

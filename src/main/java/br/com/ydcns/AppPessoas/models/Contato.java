@@ -1,6 +1,5 @@
 package br.com.ydcns.AppPessoas.models;
 
-import java.io.Serializable;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import br.com.ydcns.AppPessoas.enums.TipoContato;
@@ -15,36 +14,26 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "tb_contatos")
-public class Contato implements Serializable {
-	private static final long serialVersionUID = 1L;
-
+@Schema(hidden = true)
+public class Contato {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@NotNull
-	@Enumerated(EnumType.ORDINAL)
 	@Column(nullable = false)
-	@Schema(description = "Meios de contato da pessoa",
-			example = "Telefone, Celular, Email, Linkedin e Github")
+	@Enumerated(EnumType.ORDINAL)
 	@JsonProperty("tipoContato")
 	private TipoContato tipoContato;
 	
-	@NotBlank
 	@Column(nullable = false)
-	@Schema(description = "Contato da pessoa")
 	@JsonProperty("contato")
 	private String contato;
 	
-	@NotNull
 	@ManyToOne
     @JoinColumn(name = "pessoa_id")
-	@Schema(description = "ID da pessoa que possui o contato")
 	@JsonProperty("pessoa_id")
 	private Pessoas pessoa;
 	

@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,6 +41,7 @@ public class ContatoController {
 	@GetMapping("{id}")
 	public ResponseEntity<Optional<ContatoDTO>> findById(@PathVariable Long id) {
 		Optional<ContatoDTO> findContatoDTO = contatoService.findById(id);
+		
 		return ResponseEntity.ok(findContatoDTO);	
 	}
 	
@@ -48,6 +50,7 @@ public class ContatoController {
 	@GetMapping("/pessoa/{pessoaId}")
 	public ResponseEntity<List<ContatoDTO>> findAllById(@PathVariable Long pessoaId) {
 		List<ContatoDTO> contatosDTO = contatoService.findContatosByPessoaId(pessoaId);
+		
 		return ResponseEntity.ok(contatosDTO);				
 	}
 	
@@ -56,6 +59,16 @@ public class ContatoController {
 	@PutMapping("{id}")
 	public ResponseEntity<ContatoDTO> update(@RequestBody ContatoDTO contatoDTO) {
 		ContatoDTO updContatoDTO = contatoService.update(contatoDTO);
+		
 		return ResponseEntity.ok(updContatoDTO);
+	}
+	
+
+	@Operation(summary = "Remove um contato",
+			   description = "Exclui um contato existente pelo ID.")
+	@DeleteMapping("{id}")
+	public ResponseEntity<Void> deleteByID(@PathVariable Long id) {
+		contatoService.deleteById(id);
+		return ResponseEntity.noContent().build();
 	}
 }

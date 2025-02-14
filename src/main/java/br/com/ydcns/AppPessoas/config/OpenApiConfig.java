@@ -13,7 +13,7 @@ public class OpenApiConfig {
     public OpenAPI customOpenAPI() {        
         return new OpenAPI()
                 .info(new Info()
-                        .title("Pessoas e contatos")
+                        .title("Pessoas e seus meios de contatos")
                         .description("API RESTful desenvolvida para gerenciar pessoas e seus contatos."
                         		   + " Ela permite o cadastro, atualização, exclusão e consulta de informações de indivíduos,"
                         		   + " além de armazenar e organizar seus meios de contato.")
