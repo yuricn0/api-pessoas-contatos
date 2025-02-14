@@ -1,7 +1,6 @@
 package br.com.ydcns.AppPessoas.controllers;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.ydcns.AppPessoas.dto.PessoasDTO;
 import br.com.ydcns.AppPessoas.dto.PessoasMalaDiretaDTO;
-import br.com.ydcns.AppPessoas.models.Pessoas;
 import br.com.ydcns.AppPessoas.services.PessoasService;
 import io.swagger.v3.oas.annotations.Operation;
 
@@ -30,41 +29,41 @@ public class PessoasController {
 	@Operation(summary = "Cadastra nova pessoa",
 			   description = "Cadastra uma nova pessoa no sistema.")
 	@PostMapping  
-	public ResponseEntity<Pessoas> createPessoa(@RequestBody Pessoas pessoa) {
-		Pessoas newPessoa = pessoasService.create(pessoa);
+	public ResponseEntity<PessoasDTO> createPessoa(@RequestBody PessoasDTO pessoaDTO) {
+		PessoasDTO newPessoa = pessoasService.create(pessoaDTO);
 		return ResponseEntity.status(HttpStatus.CREATED).body(newPessoa);
 	}
 	
 	@Operation(summary = "Busca uma pessoa pelo ID",
 			   description = "Retorna os dados de uma pessoa específica.")
 	@GetMapping("{id}") 
-	public ResponseEntity<Optional<Pessoas>> findById(@PathVariable Long id) { 
-		Optional<Pessoas> pessoa = pessoasService.findById(id);
-		return ResponseEntity.ok(pessoa);
+	public ResponseEntity<PessoasDTO> findById(@PathVariable Long id) { 
+		PessoasDTO findPessoaDTO = pessoasService.findById(id);
+		return ResponseEntity.ok(findPessoaDTO);
 	}
 	
 	@Operation(summary = "Busca uma pessoa pelo ID para mala direta", 
 			   description = "Retorna nome e endereço completo de uma pessoa específica para mala direta.")
     @GetMapping("maladireta/{id}")
-    public ResponseEntity<Object> findByIdMalaDireta(@PathVariable Long id) {
-    	PessoasMalaDiretaDTO pessoaDto = pessoasService.findByIdMalaDireta(id);
-		return ResponseEntity.ok(pessoaDto);
+    public ResponseEntity<PessoasMalaDiretaDTO> findByIdMalaDireta(@PathVariable Long id) {
+    	PessoasMalaDiretaDTO pessoaMalaDiretaDTO = pessoasService.findByIdMalaDireta(id);
+		return ResponseEntity.ok(pessoaMalaDiretaDTO);
     }
     
 	@Operation(summary = "Lista todas as pessoas", 
 			   description = "Retorna uma lista de todas as pessoas cadastradas.")
     @GetMapping
-    public ResponseEntity<List<Pessoas>> findAll(){
-    	List<Pessoas> pessoas = pessoasService.findAll();
-    	return ResponseEntity.ok(pessoas);
+    public ResponseEntity<List<PessoasDTO>> findAll(){
+    	List<PessoasDTO> pessoasDTO = pessoasService.findAll();
+    	return ResponseEntity.ok(pessoasDTO);
 	}
 	
 	@Operation(summary = "Atualiza uma pessoa",
 			   description = "Atualiza os dados de uma pessoa existente pelo ID.")
     @PutMapping("/{id}")
-    public ResponseEntity<Pessoas> update(@RequestBody Pessoas pessoa){
-		Pessoas updPessoas = pessoasService.update(pessoa);
-		return ResponseEntity.ok(updPessoas);
+    public ResponseEntity<PessoasDTO> update(@RequestBody PessoasDTO pessoaDTO){
+		PessoasDTO updPessoasDTO = pessoasService.update(pessoaDTO);
+		return ResponseEntity.ok(updPessoasDTO);
 	}
 	
 	@Operation(summary = "Remove uma pessoa",

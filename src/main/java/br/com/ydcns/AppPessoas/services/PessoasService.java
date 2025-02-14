@@ -1,21 +1,20 @@
 package br.com.ydcns.AppPessoas.services;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.ydcns.AppPessoas.dto.PessoasDTO;
 import br.com.ydcns.AppPessoas.dto.PessoasMalaDiretaDTO;
-import br.com.ydcns.AppPessoas.exceptions.CepValidateException;
 import br.com.ydcns.AppPessoas.exceptions.FindByIdException;
 import br.com.ydcns.AppPessoas.exceptions.IdNotNullException;
 import br.com.ydcns.AppPessoas.exceptions.ListNullException;
-import br.com.ydcns.AppPessoas.exceptions.NameLimitException;
-import br.com.ydcns.AppPessoas.exceptions.NameNotNullException;
-import br.com.ydcns.AppPessoas.exceptions.UfValidateException;
 import br.com.ydcns.AppPessoas.models.Pessoas;
 import br.com.ydcns.AppPessoas.repositories.PessoasRepository;
+import br.com.ydcns.AppPessoas.validations.PessoaValidator;
 
 @Service
 public class PessoasService {
@@ -23,53 +22,43 @@ public class PessoasService {
 	@Autowired
 	private PessoasRepository pessoasRepository;
 	
-	public Pessoas create(Pessoas pessoa) {
-		if (pessoa.getNome() == null || pessoa.getNome().trim().isEmpty()) {
-			throw new NameNotNullException(); 
-		} else if (pessoa.getNome().trim().length() > 100 ) {
-			throw new NameLimitException();
-		}
+	public PessoasDTO create(PessoasDTO pessoaDTO) {
 		
-		if (pessoa.getCep() != null && pessoa.getCep().trim().length() != 9) {
-			throw new CepValidateException();
-		}
+		PessoaValidator.validarNome(pessoaDTO.getNome());
+		PessoaValidator.validarCep(pessoaDTO.getCep());
+		PessoaValidator.validarUf(pessoaDTO.getUf());
 		
-		if (pessoa.getUf() != null && pessoa.getUf().trim().length() != 2) {
-			throw new UfValidateException();
-		}
+		PessoaValidator.formatarNome(pessoaDTO.getNome());
+		PessoaValidator.formatarCep(pessoaDTO.getCep());
+		PessoaValidator.formatarUf(pessoaDTO.getUf());
 		
-		if (pessoa.getNome() != null) {
-		    pessoa.setNome(pessoa.getNome().trim());
-		}
+		Pessoas pessoa = new Pessoas();
+		BeanUtils.copyProperties(pessoaDTO, pessoa);
 
-		if (pessoa.getCep() != null) {
-		    pessoa.setCep(pessoa.getCep().trim());
-		}
+		pessoa = pessoasRepository.save(pessoa);
 		
-		if (pessoa.getUf() != null) {
-		    pessoa.setUf(pessoa.getUf().trim().toUpperCase());
-		}
-
-		return pessoasRepository.save(pessoa);
+		return new PessoasDTO(pessoa.getId(), pessoa.getNome(), pessoa.getEndereco(),
+							  pessoa.getCep(), pessoa.getCidade(), pessoa.getUf());
 	}
 	
-	public Optional<Pessoas> findById(Long id){
-	    Optional<Pessoas> pessoa = pessoasRepository.findById(id);
-	    if (pessoa.isEmpty()) {
-	        throw new FindByIdException();
-	    }
-	    return pessoa; 
+	public PessoasDTO findById(Long id){
+	    Pessoas findPessoa = pessoasRepository.findById(id)
+	    		.orElseThrow(FindByIdException::new);
+	    
+	    PessoasDTO pessoaDTO = new PessoasDTO();
+	    BeanUtils.copyProperties(findPessoa, pessoaDTO);
+	    
+	    return pessoaDTO;
 	}
 	
 	public PessoasMalaDiretaDTO findByIdMalaDireta(Long id) {
-	    Optional<Pessoas> pessoa = pessoasRepository.findById(id);
-	    if (pessoa.isEmpty()) {
-	        throw new FindByIdException();
-	    }
-	    return new PessoasMalaDiretaDTO(pessoa.get());
+	    Pessoas findPessoa = pessoasRepository.findById(id)
+	    		.orElseThrow(FindByIdException::new);
+	    
+	    return new PessoasMalaDiretaDTO(findPessoa);
 	}
 	
-	public List<Pessoas> findAll(){
+	public List<PessoasDTO> findAll(){
 		List<Pessoas> pessoas = pessoasRepository.findAll();
 		if (pessoas == null) {
 			throw new ListNullException();
@@ -77,60 +66,50 @@ public class PessoasService {
 		if (pessoas.size() == 0) {
 			throw new ListNullException();
 		}
-		return pessoas;
+		
+		List<PessoasDTO> pessoasDTOList = new ArrayList<>();
+	    for (Pessoas pessoa : pessoas) {
+	        PessoasDTO pessoaDTO = new PessoasDTO();
+	        
+	        pessoaDTO.setId(pessoa.getId());
+	        pessoaDTO.setNome(pessoa.getNome());
+	        pessoaDTO.setEndereco(pessoa.getEndereco());
+	        pessoaDTO.setCep(pessoa.getCep());
+	        pessoaDTO.setCidade(pessoa.getCidade());
+	        pessoaDTO.setUf(pessoa.getUf());
+	        
+	        pessoasDTOList.add(pessoaDTO);
+	    }		
+		return pessoasDTOList;
 	}
 
-	public Pessoas update(Pessoas pessoa) {
-		if (pessoa.getId() == null) {
+	public PessoasDTO update(PessoasDTO pessoaDTO) {
+		
+		if (pessoaDTO.getId() == null) {
 			throw new IdNotNullException();
 		}
 		
-		if (pessoa.getNome() != null && pessoa.getNome().trim().isEmpty()){
-			throw new NameNotNullException();
-		}
+		PessoaValidator.validarNome(pessoaDTO.getNome());
+		PessoaValidator.validarCep(pessoaDTO.getCep());
+		PessoaValidator.validarUf(pessoaDTO.getUf());
+						
+		Pessoas findPessoa = pessoasRepository.findById(pessoaDTO.getId())
+				.orElseThrow(FindByIdException::new);
+
+		PessoaValidator.formatarNomeUpd(findPessoa, pessoaDTO.getNome());
+	    PessoaValidator.formatarEnderecoUpd(findPessoa, pessoaDTO.getEndereco());
+	    PessoaValidator.formatarCepUpd(findPessoa, pessoaDTO.getCep());
+	    PessoaValidator.formatarCidadeUpd(findPessoa, pessoaDTO.getCidade());
+	    PessoaValidator.formatarUfUpd(findPessoa, pessoaDTO.getUf());
 		
-		if (pessoa.getNome() != null && pessoa.getNome().trim().length() > 100) {
-			throw new NameLimitException();
-		}
-		
-		if (pessoa.getCep() != null && pessoa.getCep().trim().length() != 9) {
-			throw new CepValidateException();
-		}
-		
-		if (pessoa.getUf() != null && pessoa.getUf().trim().length() != 2) {
-			throw new UfValidateException();
-		}
-					
-		Optional<Pessoas> findPessoa = pessoasRepository.findById(pessoa.getId());
-		if (findPessoa.isPresent()) {
-		    Pessoas updPessoa = findPessoa.get();
-
-		    if (pessoa.getNome() != null) {
-		        updPessoa.setNome(pessoa.getNome().trim());
-		    }
-		    
-		    if (pessoa.getEndereco() != null) {
-		        updPessoa.setEndereco(pessoa.getEndereco().trim());
-		    }
-
-		    if (pessoa.getCep() != null) {
-		        updPessoa.setCep(pessoa.getCep().trim());
-		    }
-
-		    if (pessoa.getCidade() != null) {
-		        updPessoa.setCidade(pessoa.getCidade().trim());
-		    }
-
-		    if (pessoa.getUf() != null) {
-		        updPessoa.setUf(pessoa.getUf().trim().toUpperCase());
-		    }
-
-		    return pessoasRepository.save(updPessoa); 
-		}
-		
-		throw new FindByIdException(); 
+	    pessoasRepository.save(findPessoa);
+	    
+	    PessoasDTO updPessoaDTO = new PessoasDTO();
+	    BeanUtils.copyProperties(findPessoa, updPessoaDTO);
+	    
+	    return updPessoaDTO;
 	}
-
+	
 	public void deleteById(Long id) {
 		Pessoas pessoa = pessoasRepository.findById(id)
 				.orElseThrow(FindByIdException::new);

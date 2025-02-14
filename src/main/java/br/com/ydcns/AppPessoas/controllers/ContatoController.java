@@ -1,7 +1,6 @@
 package br.com.ydcns.AppPessoas.controllers;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -39,8 +38,8 @@ public class ContatoController {
 	@Operation(summary = "Busca um contato pelo ID",
 			   description = "Retorna os dados de um contato específico.")
 	@GetMapping("{id}")
-	public ResponseEntity<Optional<ContatoDTO>> findById(@PathVariable Long id) {
-		Optional<ContatoDTO> findContatoDTO = contatoService.findById(id);
+	public ResponseEntity<ContatoDTO> findById(@PathVariable Long id) {
+		ContatoDTO findContatoDTO = contatoService.findById(id);
 		
 		return ResponseEntity.ok(findContatoDTO);	
 	}
@@ -63,7 +62,6 @@ public class ContatoController {
 		return ResponseEntity.ok(updContatoDTO);
 	}
 	
-
 	@Operation(summary = "Remove um contato",
 			   description = "Exclui um contato existente pelo ID.")
 	@DeleteMapping("{id}")

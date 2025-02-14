@@ -2,7 +2,6 @@ package br.com.ydcns.AppPessoas.services;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,8 +28,7 @@ public class ContatoService {
 	@Autowired
 	private PessoasRepository pessoasRepository;
 	
-    public ContatoDTO createContato(ContatoDTO contatoDTO) {
-    	
+    public ContatoDTO createContato(ContatoDTO contatoDTO) {	
     	if(contatoDTO.getPessoaId() == null) {
     		throw new PessoaIdNotNullException();
     	}
@@ -59,33 +57,30 @@ public class ContatoService {
 	    					  novoContato.getContato(),
 	    					  novoContato.getPessoa().getId());
     }
-    
-	
-	public Optional<ContatoDTO> findById(Long id){
-	    Optional<Contato> contatoOpt= contatoRepository.findById(id);
-	    if (contatoOpt.isEmpty()) {
-	        throw new FindByIdException();
-	    }
+    	
+	public ContatoDTO findById(Long id){
+	    Contato contato = contatoRepository.findById(id)
+	    		.orElseThrow(FindByIdException::new);
 	    
-	    Contato contato = contatoOpt.get(); 
 	    ContatoDTO contatoDTO = new ContatoDTO();
 	    contatoDTO.setId(contato.getId());
-	    contatoDTO.setPessoaId(contato.getPessoa().getId());
-	    contatoDTO.setContato(contato.getContato());
 	    contatoDTO.setTipoContato(contato.getTipoContato().name());
-	       
-	    return Optional.of(contatoDTO); 
+	    contatoDTO.setContato(contato.getContato());
+	    contatoDTO.setPessoaId(contato.getPessoa().getId());
+	  	       
+	    return contatoDTO; 
 	}
 	
 	public List<ContatoDTO> findContatosByPessoaId(Long pessoaId){
-		List<Contato> contatos = contatoRepository.findByPessoaId(pessoaId);
-		if (contatos.isEmpty()) {
+		List<Contato> contatosPessoaId = contatoRepository.findByPessoaId(pessoaId);
+		if (contatosPessoaId.isEmpty()) {
 			throw new FindByIdException();
 		}
 		
 		List<ContatoDTO> contatosDTO = new ArrayList<>();
-		for (Contato contato : contatos) {
+		for (Contato contato : contatosPessoaId) {
 			ContatoDTO contatoDTO = new ContatoDTO();
+			
 			contatoDTO.setId(contato.getId());
 			contatoDTO.setPessoaId(contato.getPessoa().getId());
 		    contatoDTO.setContato(contato.getContato());

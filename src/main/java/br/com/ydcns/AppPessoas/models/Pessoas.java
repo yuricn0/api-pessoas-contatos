@@ -27,23 +27,20 @@ public class Pessoas{
 	
 	@Size(max = 100)
 	@Column(nullable = false, length = 100)
-	@Schema(description = "Nome da pessoa", example = "João")
 	private String nome;
 	
-	@Schema(description = "Endereço da pessoa", example = "Rua Santos, 154")
+	@Column(name = "endereco")
 	private String endereco;
 	
 	@Size(min = 9, max = 9)
 	@Column(length = 9)
-	@Schema(description = "Cep da pessoa no formato XXXXX-XXX", example = "09361-080")
 	private String cep;
 	
-	@Schema(description = "Cidade da pessoa", example = "São Paulo")
+	@Column(name = "cidade")
 	private String cidade;
 	
 	@Size(min = 2, max = 2)
 	@Column(length = 2)
-	@Schema(description = "Estado da pessoa (UF)", example = "SP")
 	private String uf;
 	
 	@JsonIgnore
