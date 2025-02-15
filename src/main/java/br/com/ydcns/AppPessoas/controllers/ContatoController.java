@@ -30,9 +30,9 @@ public class ContatoController {
 			   description = "Cadastra um novo contato a uma pessoa.")
 	@PostMapping
 	public ResponseEntity<ContatoDTO> createContato(@RequestBody ContatoDTO contatoDTO) {
-		ContatoDTO newContato = contatoService.createContato(contatoDTO);
+		ContatoDTO newContatoDTO = contatoService.createContato(contatoDTO);
 		
-		return ResponseEntity.status(HttpStatus.CREATED).body(newContato);	
+		return ResponseEntity.status(HttpStatus.CREATED).body(newContatoDTO);	
 	}
 	
 	@Operation(summary = "Busca um contato pelo ID",
@@ -46,7 +46,7 @@ public class ContatoController {
 	
 	@Operation(summary = "Lista todos os contatos de uma pessoa pelo ID",
 			   description = "Retorna uma lista de contatos de uma pessoa.")
-	@GetMapping("/pessoa/{pessoaId}")
+	@GetMapping("pessoa/{pessoaId}")
 	public ResponseEntity<List<ContatoDTO>> findAllById(@PathVariable Long pessoaId) {
 		List<ContatoDTO> contatosDTO = contatoService.findContatosByPessoaId(pessoaId);
 		

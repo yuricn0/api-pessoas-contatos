@@ -60,7 +60,7 @@ public class PessoasController {
 	
 	@Operation(summary = "Atualiza uma pessoa",
 			   description = "Atualiza os dados de uma pessoa existente pelo ID.")
-    @PutMapping("/{id}")
+    @PutMapping("{id}")
     public ResponseEntity<PessoasDTO> update(@RequestBody PessoasDTO pessoaDTO){
 		PessoasDTO updPessoasDTO = pessoasService.update(pessoaDTO);
 		return ResponseEntity.ok(updPessoasDTO);

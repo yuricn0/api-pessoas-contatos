@@ -48,8 +48,7 @@ public class ContatoService {
 	    novoContato.setContato(contatoDTO.getContato());
 	    novoContato.setPessoa(pessoa);
 	    
-	    pessoa.getContato().add(novoContato);
-	    
+	    pessoa.getContato().add(novoContato);	    
 	    contatoRepository.save(novoContato);
 	    pessoasRepository.save(pessoa);
 	    
