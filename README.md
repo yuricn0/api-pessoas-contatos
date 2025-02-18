@@ -25,7 +25,7 @@ API RESTful desenvolvida para gerenciar pessoas e seus contatos. Ela permite o c
 - Postman
 
 ## Funcionalidades
-A API implementa as seguintes funcionalidades:
+Funcionalidades da API:
 
 ### CRUD de Pessoas
 - `POST /api/pessoas`: Cadastra uma nova pessoa.
@@ -59,17 +59,15 @@ classDiagram
 
     class Contato {
         +int id
-        +TipoContato tipo_contato
+        +TipoContato tipoContato
         +String contato
-        +int pessoa_id
+        +int pessoaId
     }
  Pessoas "1" --> "*" Contato
 ```
 ## Estrutura da API
 
 A estrutura da API foi organizada de forma modular para garantir clareza, escalabilidade e manutenção eficiente. A seguir, uma descrição dos principais pacotes e arquivos da aplicação:
-
-### Pacotes
 
 - **AppPessoas**: Contém a classe principal responsável por iniciar a aplicação. Esse pacote configura a inicialização da API, carregando as dependências e as configurações essenciais para o funcionamento.
 
@@ -91,11 +89,11 @@ A estrutura da API foi organizada de forma modular para garantir clareza, escala
 
 - **Validations**: Este pacote é responsável pela validação das entidades antes de serem inseridas no banco de dados. No caso de **Pessoas**, por exemplo, ele valida as informações recebidas antes da persistência, garantindo que os dados estejam corretos e completos.
 
-### Arquivos no diretório `resources`
-
 - **application.properties**: Contém as configurações essenciais para a execução da aplicação, incluindo as credenciais e configurações do banco de dados. Aqui, você pode configurar o banco de dados a ser utilizado (MySQL, PostgreSQL, H2, etc.), além de outros parâmetros de ambiente.
 
-- **data.sql**: Arquivo utilizado para inserir dados iniciais no banco de dados quando a aplicação é iniciada. Esse arquivo pode ser útil para pré-carregar o banco com dados de teste ou configuráveis para o funcionamento da aplicação. (Utilizando banco h2)
+- **data.sql**: Arquivo utilizado para inserir dados iniciais no banco de dados quando a aplicação é iniciada. Esse arquivo pode ser útil para pré-carregar o banco com dados de teste ou configuráveis para o funcionamento da aplicação. (Utilizando banco H2)
+  
+- **pom.xml**: Arquivo onde contém todas as dependencias necessárias para a API funcionar.
 
 
 ## Executando o projeto
@@ -110,16 +108,12 @@ A estrutura da API foi organizada de forma modular para garantir clareza, escala
 - **[IntelliJ IDEA](https://www.jetbrains.com/idea/download/?section=windows)**
 - **[Spring Tool Suite (STS)](https://spring.io/tools)**
 
-3. Vá até o pacote src/main/resources e entre no arquivo `application.properties` e veja as credenciais do banco de dados para login e senha. Os campos são:
-- spring.datasource.username=(username aqui)
-- spring.datasource.password=(senha aqui)
-
-4. Compile a aplicação
+3. Compile a aplicação
 
    ```bash
    mvn clean install
    
-5. Execute a aplicação
+4. Execute a aplicação
 
    ```bash
    mvn spring-boot:run
@@ -128,8 +122,12 @@ Isso iniciará a aplicação Spring Boot. Se tudo estiver configurado corretamen
 
 ## Banco de Dados
 
-O banco de dados h2 pode ser acessado pelo endereço: http://localhost:8080/h2-console.   
-Entre com as credenciais fornecidas no arquivo `application.properties`.
+Vá até o pacote src/main/resources e entre no arquivo `application.properties` e veja as credenciais do banco de dados para login e senha. Os campos são:
+
+- spring.datasource.username=(username aqui)
+- spring.datasource.password=(senha aqui)
+
+O banco de dados pode ser acessado pelo endereço: http://localhost:8080/h2-console 
 
 ## Documentação e Testes da API 
 
