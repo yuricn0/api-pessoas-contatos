@@ -11,4 +11,3 @@ public class ListNullException extends RuntimeException {
 		super(message);
 	}
 }
-

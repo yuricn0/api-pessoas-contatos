@@ -97,9 +97,7 @@ public class PessoasService {
 				.orElseThrow(FindByIdException::new);
 
 		PessoaValidator.formatarNomeUpd(findPessoa, pessoaDTO.getNome());
-	    PessoaValidator.formatarEnderecoUpd(findPessoa, pessoaDTO.getEndereco());
 	    PessoaValidator.formatarCepUpd(findPessoa, pessoaDTO.getCep());
-	    PessoaValidator.formatarCidadeUpd(findPessoa, pessoaDTO.getCidade());
 	    PessoaValidator.formatarUfUpd(findPessoa, pessoaDTO.getUf());
 		
 	    pessoasRepository.save(findPessoa);

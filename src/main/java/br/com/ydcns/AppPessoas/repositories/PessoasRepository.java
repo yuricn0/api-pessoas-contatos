@@ -8,5 +8,4 @@ import br.com.ydcns.AppPessoas.models.Pessoas;
 @Repository
 public interface PessoasRepository extends JpaRepository<Pessoas, Long> {
 
-
 }

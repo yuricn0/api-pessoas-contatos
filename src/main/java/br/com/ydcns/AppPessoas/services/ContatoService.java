@@ -47,8 +47,8 @@ public class ContatoService {
 	    novoContato.setTipoContato(tipoContato);
 	    novoContato.setContato(contatoDTO.getContato());
 	    novoContato.setPessoa(pessoa);
+	    pessoa.getContato().add(novoContato);
 	    
-	    pessoa.getContato().add(novoContato);	    
 	    contatoRepository.save(novoContato);
 	    pessoasRepository.save(pessoa);
 	    
@@ -80,7 +80,6 @@ public class ContatoService {
 		for (Contato contato : contatosPessoaId) {
 			ContatoDTO contatoDTO = new ContatoDTO();
 			
-			contatoDTO.setId(contato.getId());
 			contatoDTO.setPessoaId(contato.getPessoa().getId());
 		    contatoDTO.setContato(contato.getContato());
 		    contatoDTO.setTipoContato(contato.getTipoContato().name());
@@ -90,7 +89,6 @@ public class ContatoService {
 	}
 	
 	public ContatoDTO update(ContatoDTO contatoDTO){
-		
 		if(contatoDTO.getId() == null) {
     		throw new IdNotNullException();
     	}
@@ -118,6 +116,7 @@ public class ContatoService {
 	public void deleteById(Long id) {
 		Contato contato = contatoRepository.findById(id)
 				.orElseThrow(FindByIdException::new);
+		
 		contatoRepository.delete(contato);
 	}	
 }

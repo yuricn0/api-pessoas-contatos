@@ -52,21 +52,9 @@ public class PessoaValidator {
         }
     }
 
-	public static void formatarEnderecoUpd(Pessoas pessoa, String endereco) {
-        if (endereco != null) {
-            pessoa.setEndereco(endereco.trim());
-        }
-    }
-
     public static void formatarCepUpd(Pessoas pessoa, String cep) {
         if (cep != null) {
             pessoa.setCep(cep.trim());
-        }
-    }
-
-    public static void formatarCidadeUpd(Pessoas pessoa, String cidade) {
-        if (cidade != null) {
-            pessoa.setCidade(cidade.trim());
         }
     }
 

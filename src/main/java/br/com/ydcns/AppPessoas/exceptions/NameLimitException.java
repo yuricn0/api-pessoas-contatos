@@ -10,5 +10,4 @@ public class NameLimitException extends RuntimeException{
 	public NameLimitException(String message) {
 		super(message);
 	}
-
 }

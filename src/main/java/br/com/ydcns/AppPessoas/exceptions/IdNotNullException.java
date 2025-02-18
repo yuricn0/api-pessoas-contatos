@@ -11,4 +11,3 @@ public class IdNotNullException extends RuntimeException {
 		super(message);
 	}
 }
-

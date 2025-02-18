@@ -18,7 +18,6 @@ import br.com.ydcns.AppPessoas.dto.ContatoDTO;
 import br.com.ydcns.AppPessoas.services.ContatoService;
 import io.swagger.v3.oas.annotations.Operation;
 
-
 @RestController
 @RequestMapping("/api/contatos")
 public class ContatoController {
@@ -54,7 +53,7 @@ public class ContatoController {
 	}
 	
 	@Operation(summary = "Atualiza um contato pelo ID",
-			   description = "Atualiza um contato existente.")
+			   description = "Atualiza um contato existente. Não é necessário colocar o pessoaId.")
 	@PutMapping("{id}")
 	public ResponseEntity<ContatoDTO> update(@RequestBody ContatoDTO contatoDTO) {
 		ContatoDTO updContatoDTO = contatoService.update(contatoDTO);
@@ -67,6 +66,7 @@ public class ContatoController {
 	@DeleteMapping("{id}")
 	public ResponseEntity<Void> deleteByID(@PathVariable Long id) {
 		contatoService.deleteById(id);
+		
 		return ResponseEntity.noContent().build();
 	}
 }

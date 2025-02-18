@@ -11,4 +11,3 @@ public class UfValidateException extends RuntimeException {
 		super(message);
 	}
 }
-

@@ -23,5 +23,4 @@ public record PessoasMalaDiretaDTO(
              " - " + pessoa.getCidade() + "-" + pessoa.getUf()
         );
     }
-
-} 	
+}

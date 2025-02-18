@@ -10,5 +10,4 @@ public class PessoaIdNotNullException extends RuntimeException {
 	public PessoaIdNotNullException(String message) {
 		super(message);
 	}
-
 }

@@ -51,7 +51,6 @@ public class Pessoas{
 
 	public Pessoas(Long id, String nome, String endereco, String cep,
 			       String cidade, String uf, Set<Contato> contato) {
-		super();
 		this.id = id;
 		this.nome = nome;
 		this.endereco = endereco;

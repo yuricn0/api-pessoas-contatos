@@ -19,6 +19,7 @@ import jakarta.persistence.Table;
 @Table(name = "tb_contatos")
 @Schema(hidden = true)
 public class Contato {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;

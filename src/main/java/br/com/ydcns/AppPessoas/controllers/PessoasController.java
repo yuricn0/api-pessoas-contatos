@@ -31,6 +31,7 @@ public class PessoasController {
 	@PostMapping  
 	public ResponseEntity<PessoasDTO> createPessoa(@RequestBody PessoasDTO pessoaDTO) {
 		PessoasDTO newPessoa = pessoasService.create(pessoaDTO);
+		
 		return ResponseEntity.status(HttpStatus.CREATED).body(newPessoa);
 	}
 	
@@ -39,6 +40,7 @@ public class PessoasController {
 	@GetMapping("{id}") 
 	public ResponseEntity<PessoasDTO> findById(@PathVariable Long id) { 
 		PessoasDTO findPessoaDTO = pessoasService.findById(id);
+		
 		return ResponseEntity.ok(findPessoaDTO);
 	}
 	
@@ -47,6 +49,7 @@ public class PessoasController {
     @GetMapping("maladireta/{id}")
     public ResponseEntity<PessoasMalaDiretaDTO> findByIdMalaDireta(@PathVariable Long id) {
     	PessoasMalaDiretaDTO pessoaMalaDiretaDTO = pessoasService.findByIdMalaDireta(id);
+    	
 		return ResponseEntity.ok(pessoaMalaDiretaDTO);
     }
     
@@ -55,6 +58,7 @@ public class PessoasController {
     @GetMapping
     public ResponseEntity<List<PessoasDTO>> findAll(){
     	List<PessoasDTO> pessoasDTO = pessoasService.findAll();
+    	
     	return ResponseEntity.ok(pessoasDTO);
 	}
 	
@@ -63,6 +67,7 @@ public class PessoasController {
     @PutMapping("{id}")
     public ResponseEntity<PessoasDTO> update(@RequestBody PessoasDTO pessoaDTO){
 		PessoasDTO updPessoasDTO = pessoasService.update(pessoaDTO);
+		
 		return ResponseEntity.ok(updPessoasDTO);
 	}
 	
@@ -71,6 +76,7 @@ public class PessoasController {
     @DeleteMapping("{id}")
     public ResponseEntity<Void> deleteById(@PathVariable Long id) {
         pessoasService.deleteById(id); 
+        
         return ResponseEntity.noContent().build();
     }
 }
