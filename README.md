@@ -1,4 +1,4 @@
-# Sistema de Cadastro e Gerenciamento de Pessoas e Contatos
+# Cadastro e Gerenciamento de Pessoas e Contatos
 
 ## Índice
 1. [Introdução](#introdução)
