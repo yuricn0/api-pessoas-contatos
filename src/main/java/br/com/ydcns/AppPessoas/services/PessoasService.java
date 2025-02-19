@@ -23,7 +23,6 @@ public class PessoasService {
 	private PessoasRepository pessoasRepository;
 	
 	public PessoasDTO create(PessoasDTO pessoaDTO) {
-		
 		PessoaValidator.validarNome(pessoaDTO.getNome());
 		PessoaValidator.validarCep(pessoaDTO.getCep());
 		PessoaValidator.validarUf(pessoaDTO.getUf());
@@ -60,6 +59,7 @@ public class PessoasService {
 	
 	public List<PessoasDTO> findAll(){
 		List<Pessoas> pessoas = pessoasRepository.findAll();
+		
 		if (pessoas == null) {
 			throw new ListNullException();
 		}
@@ -68,7 +68,7 @@ public class PessoasService {
 		}
 		
 		List<PessoasDTO> pessoasDTOList = new ArrayList<>();
-	    for (Pessoas pessoa : pessoas) {
+	    for (Pessoas pessoa : pessoas) {	    	
 	        PessoasDTO pessoaDTO = new PessoasDTO();
 	        
 	        pessoaDTO.setId(pessoa.getId());
@@ -83,8 +83,7 @@ public class PessoasService {
 		return pessoasDTOList;
 	}
 
-	public PessoasDTO update(PessoasDTO pessoaDTO) {
-		
+	public PessoasDTO update(PessoasDTO pessoaDTO) {		
 		if (pessoaDTO.getId() == null) {
 			throw new IdNotNullException();
 		}

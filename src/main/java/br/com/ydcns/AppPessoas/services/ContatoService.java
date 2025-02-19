@@ -120,4 +120,3 @@ public class ContatoService {
 		contatoRepository.delete(contato);
 	}	
 }
-

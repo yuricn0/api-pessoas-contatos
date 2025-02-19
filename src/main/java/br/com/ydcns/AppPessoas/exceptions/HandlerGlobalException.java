@@ -9,9 +9,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import io.swagger.v3.oas.annotations.Hidden;
 
-@Hidden
 @ControllerAdvice
 public class HandlerGlobalException extends ResponseEntityExceptionHandler{
 	
