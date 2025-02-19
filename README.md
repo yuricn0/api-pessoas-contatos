@@ -10,13 +10,15 @@
    - [Passos](#passos)
    - [Banco de Dados](#banco-de-dados)
 7. [Documentação e Testes da API](#documentação-e-testes-da-api)
+8. [Funcionalidades Futuras](#funcionalidades-futuras)
 
 ## Introdução
-API RESTful desenvolvida para gerenciar pessoas e seus contatos. Ela permite o cadastro, atualização, exclusão e consulta de informações de indivíduos, além de armazenar e organizar seus meios de contato.
+API RESTful projetada para gerenciar pessoas e seus contatos, oferecendo recursos para cadastro, atualização, exclusão e consulta de dados. Seguindo as melhores práticas de desenvolvimento, a aplicação garante uma organização eficiente e estruturada das informações.
 
 ## Tecnologias Utilizadas
 - Java 21
 - Spring Boot 3.4.2
+- Maven
 - JPA repository 
 - Hibernate
 - Banco de Dados: H2 (Em memória)
@@ -133,3 +135,9 @@ O banco de dados pode ser acessado pelo endereço: http://localhost:8080/h2-cons
 
 A documentação da API está disponível através do Swagger, uma ferramenta que permite explorar e testar os endpoints da API.
 Após iniciar o projeto, você pode acessar a documentação da API no seguinte endereço: http://localhost:8080/swagger-ui/index.html 
+
+## Funcionalidades Futuras 
+
+- Integração com banco de dados relacional (MySQL) para persistência de dados
+- Desenvolvimento de testes unitários robustos com JUnit e Mockito
+- Implementação de uma interface front-end para interação com a API
