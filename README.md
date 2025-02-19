@@ -1,11 +1,9 @@
-# Sistema de Cadastro e Gerenciamento de Pessoas e Contatos
+# Cadastro e Gerenciamento de Pessoas e Contatos
 
 ## Índice
 1. [Introdução](#introdução)
 2. [Tecnologias Utilizadas](#tecnologias-utilizadas)
 3. [Funcionalidades](#funcionalidades)
-   - [CRUD de Pessoas](#crud-de-pessoas)
-   - [CRUD de Contatos](#crud-de-contatos)
 4. [Modelagem de Dados](#modelagem-de-dados)
 5. [Estrutura da API](#estrutura-da-api)
 6. [Executando o Projeto](#executando-o-projeto)
@@ -19,10 +17,12 @@ API RESTful desenvolvida para gerenciar pessoas e seus contatos. Ela permite o c
 ## Tecnologias Utilizadas
 - Java 21
 - Spring Boot 3.4.2
-- JPA/Hibernate
+- JPA repository 
+- Hibernate
 - Banco de Dados: H2 (Em memória)
 - Swagger (OpenAPI)
-- Postman
+- Postman (Testes unitários)
+- Eclipse (Ambiente de Desenvolvimento) 
 
 ## Funcionalidades
 Funcionalidades da API:
@@ -131,5 +131,5 @@ O banco de dados pode ser acessado pelo endereço: http://localhost:8080/h2-cons
 
 ## Documentação e Testes da API 
 
-A documentação da API está disponível através do Swagger, uma ferramenta de interface interativa para explorar e testar os endpoints da API.
+A documentação da API está disponível através do Swagger, uma ferramenta que permite explorar e testar os endpoints da API.
 Após iniciar o projeto, você pode acessar a documentação da API no seguinte endereço: http://localhost:8080/swagger-ui/index.html 
