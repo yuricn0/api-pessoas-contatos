@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import br.com.ydcns.AppPessoas.dto.PessoasDTO;
 import br.com.ydcns.AppPessoas.dto.PessoasMalaDiretaDTO;
 import br.com.ydcns.AppPessoas.exceptions.FindByIdException;
-import br.com.ydcns.AppPessoas.exceptions.IdNotNullException;
 import br.com.ydcns.AppPessoas.exceptions.ListNullException;
 import br.com.ydcns.AppPessoas.models.Pessoas;
 import br.com.ydcns.AppPessoas.repositories.PessoasRepository;
@@ -83,29 +82,26 @@ public class PessoasService {
 		return pessoasDTOList;
 	}
 
-	public PessoasDTO update(PessoasDTO pessoaDTO) {		
-		if (pessoaDTO.getId() == null) {
-			throw new IdNotNullException();
-		}
+	public PessoasDTO update(Long id, PessoasDTO pessoaDTO) {		
 		
 		PessoaValidator.validarNome(pessoaDTO.getNome());
 		PessoaValidator.validarCep(pessoaDTO.getCep());
 		PessoaValidator.validarUf(pessoaDTO.getUf());
-						
-		Pessoas findPessoa = pessoasRepository.findById(pessoaDTO.getId())
+
+		Pessoas findPessoa = pessoasRepository.findById(id)
 				.orElseThrow(FindByIdException::new);
 
 		PessoaValidator.formatarNomeUpd(findPessoa, pessoaDTO.getNome());
 	    PessoaValidator.formatarCepUpd(findPessoa, pessoaDTO.getCep());
 	    PessoaValidator.formatarUfUpd(findPessoa, pessoaDTO.getUf());
-		
+
 	    pessoasRepository.save(findPessoa);
-	    
 	    PessoasDTO updPessoaDTO = new PessoasDTO();
 	    BeanUtils.copyProperties(findPessoa, updPessoaDTO);
-	    
+
 	    return updPessoaDTO;
 	}
+
 	
 	public void deleteById(Long id) {
 		Pessoas pessoa = pessoasRepository.findById(id)
