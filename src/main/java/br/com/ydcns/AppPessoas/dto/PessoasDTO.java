@@ -1,5 +1,8 @@
 package br.com.ydcns.AppPessoas.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 
 public class PessoasDTO {
@@ -22,8 +25,20 @@ public class PessoasDTO {
 	@Schema(description = "Estado da pessoa (UF)", example = "SP")
 	private String uf;
 	
+	private List<ContatoDTO> contatos;
+	
 	public PessoasDTO() {}
 
+	public PessoasDTO(Long id, String nome, String endereco, String cep, String cidade, String uf, List<ContatoDTO> contatos) {
+		this.id = id;
+		this.nome = nome;
+		this.endereco = endereco;
+		this.cep = cep;
+		this.cidade = cidade;
+		this.uf = uf;
+		this.contatos = contatos;
+	}
+	
 	public PessoasDTO(Long id, String nome, String endereco, String cep, String cidade, String uf) {
 		this.id = id;
 		this.nome = nome;
@@ -31,7 +46,10 @@ public class PessoasDTO {
 		this.cep = cep;
 		this.cidade = cidade;
 		this.uf = uf;
+		this.contatos = new ArrayList<>();
 	}
+
+
 
 	public Long getId() {
 		return id;
@@ -81,9 +99,17 @@ public class PessoasDTO {
 		this.uf = uf;
 	}
 
+	public List<ContatoDTO> getContatos() {
+		return contatos;
+	}
+
+	public void setContatos(List<ContatoDTO> contatos) {
+		this.contatos = contatos;
+	}
+
 	@Override
 	public String toString() {
-		return "PessoasDTO [id=" + id + ", nome=" + nome + ", endereco=" + endereco + 
-				           ", cep=" + cep + ", cidade=" + cidade + ", uf=" + uf + "]";
+		return "PessoasDTO [id=" + id + ", nome=" + nome + ", endereco=" + endereco + ", cep=" + cep + ", cidade="
+				+ cidade + ", uf=" + uf + ", contatos=" + contatos + "]";
 	}	
 }

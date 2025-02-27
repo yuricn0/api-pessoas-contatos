@@ -63,3 +63,7 @@ VALUES (3, 'linkedin.com/fernandocosta', 5);
 
 INSERT INTO tb_contatos (tipo_contato, contato, pessoa_id) 
 VALUES (4, 'github.com/fernandocosta', 5);
+
+-- Contatos de Maria Souza (ID 6)
+INSERT INTO tb_contatos (tipo_contato, contato, pessoa_id) 
+VALUES (1, '(21) 991078736', 6);

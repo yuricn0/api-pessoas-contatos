@@ -7,10 +7,12 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.ydcns.AppPessoas.dto.ContatoDTO;
 import br.com.ydcns.AppPessoas.dto.PessoasDTO;
 import br.com.ydcns.AppPessoas.dto.PessoasMalaDiretaDTO;
 import br.com.ydcns.AppPessoas.exceptions.FindByIdException;
 import br.com.ydcns.AppPessoas.exceptions.ListNullException;
+import br.com.ydcns.AppPessoas.models.Contato;
 import br.com.ydcns.AppPessoas.models.Pessoas;
 import br.com.ydcns.AppPessoas.repositories.PessoasRepository;
 import br.com.ydcns.AppPessoas.validations.PessoaValidator;
@@ -77,8 +79,21 @@ public class PessoasService {
 	        pessoaDTO.setCidade(pessoa.getCidade());
 	        pessoaDTO.setUf(pessoa.getUf());
 	        
-	        pessoasDTOList.add(pessoaDTO);
-	    }		
+	     List<ContatoDTO> contatosDTOList = new ArrayList<>();
+		 for (Contato contato : pessoa.getContato()) {
+		    ContatoDTO contatoDTO = new ContatoDTO();
+		    
+		    contatoDTO.setId(contato.getId());
+		    contatoDTO.setTipoContato(contato.getTipoContato().toString());
+		    contatoDTO.setContato(contato.getContato());
+		    contatoDTO.setPessoaId(pessoa.getId());
+		    contatosDTOList.add(contatoDTO);
+		 }
+
+	    pessoaDTO.setContatos(contatosDTOList);
+        
+        pessoasDTOList.add(pessoaDTO);
+    }		
 		return pessoasDTOList;
 	}
 
@@ -91,10 +106,12 @@ public class PessoasService {
 		Pessoas findPessoa = pessoasRepository.findById(id)
 				.orElseThrow(FindByIdException::new);
 
-		PessoaValidator.formatarNomeUpd(findPessoa, pessoaDTO.getNome());
-	    PessoaValidator.formatarCepUpd(findPessoa, pessoaDTO.getCep());
-	    PessoaValidator.formatarUfUpd(findPessoa, pessoaDTO.getUf());
-
+		findPessoa.setNome(pessoaDTO.getNome());
+	    findPessoa.setCep(pessoaDTO.getCep());
+	    findPessoa.setUf(pessoaDTO.getUf());
+	    findPessoa.setEndereco(pessoaDTO.getEndereco());
+	    findPessoa.setCidade(pessoaDTO.getCidade());
+	    
 	    pessoasRepository.save(findPessoa);
 	    PessoasDTO updPessoaDTO = new PessoasDTO();
 	    BeanUtils.copyProperties(findPessoa, updPessoaDTO);
